@@ -11,7 +11,6 @@ import java.util.Set;
 public class Rummy {
 
 	public static final int TOTAL_CARDS = 3 * 53;
-//	private static int randomized_call_num;
 
 	private static Set<Card> setOf3x53CardsOfAllRanksAndSuits() {
 		Set<Card> setOf3x53CardsOfAllRanksAndSuits = new HashSet<>(TOTAL_CARDS);
@@ -28,14 +27,12 @@ public class Rummy {
 	}
 
 	private static Set<Card> randomized(Set<Card> cards) {
-//		randomized_call_num++;
-		
 		Random rand = new Random();
 		int cardsCount = cards.size();
 		Map<Integer, Set<Card>> randomizedCardsMap = new HashMap<>(cardsCount);
 		
 		for (Card card : cards) {
-			int rand_int1 = rand.nextInt(cardsCount);// + randomized_call_num;
+			int rand_int1 = rand.nextInt(cardsCount);
 			
 			Set<Card> set = randomizedCardsMap.get(rand_int1);
 			if (set == null) {
