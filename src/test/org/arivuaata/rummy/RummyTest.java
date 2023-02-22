@@ -125,4 +125,9 @@ class RummyTest {
 	void totalCards() throws Exception {
 		assertEquals(3 * 53, Rummy.TOTAL_CARDS);
 	}
+	
+	@Test
+	void drawingPileOnGameStartIsRandomized() throws Exception {
+		fail("pending");
+	}
 }
