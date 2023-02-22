@@ -3,6 +3,7 @@ package org.arivuaata.rummy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class RummyTest {
 
 	@Test
-	void drawingPileHas3x52CardsOfAllRanksAndSuitsOnGameStart() {
+	void drawingPileHas3x53CardsOfAllRanksAndSuitsOnGameStart() {
 		Map<Integer, Integer> cardBackCount = initCardBackCount();
 		Map<Suit, Integer> suitCount = initSuitCount();
 		Map<Card.Rank, Integer> rankCount = initRankCount();
@@ -88,7 +89,7 @@ class RummyTest {
 
 	private void assertCardBackCount(Map<Integer, Integer> cardBackCount) {
 		for (int cardBack = 1; cardBack <= 3; cardBack++) {
-			assertEquals(53, cardBackCount.get(cardBack));
+			assertEquals(53, cardBackCount.get(cardBack), "cardBack" + cardBack);
 		}
 	}
 
@@ -128,6 +129,24 @@ class RummyTest {
 	
 	@Test
 	void drawingPileOnGameStartIsRandomized() throws Exception {
-		fail("pending");
+		Set<Card> pile1 = Rummy.drawingPileOnGameStart();
+		Set<Card> pile2 = Rummy.drawingPileOnGameStart();
+		
+		int equalityCount = 0;
+		int comparisonCount = 0;
+
+		for (Iterator<Card> iterator1 = pile1.iterator(), iterator2 = pile2.iterator();
+				iterator1.hasNext() && iterator2.hasNext();) {
+			Card card1 = iterator1.next();
+			Card card2 = iterator2.next();
+			
+			if (card1.equals(card2)) {
+				equalityCount++;
+			}
+			comparisonCount++;
+		}
+		
+		assertEquals(comparisonCount, Rummy.TOTAL_CARDS, "comparisonCount");
+		assertTrue(equalityCount < comparisonCount);
 	}
 }
