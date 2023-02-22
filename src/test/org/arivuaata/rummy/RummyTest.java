@@ -148,5 +148,6 @@ class RummyTest {
 		
 		assertEquals(comparisonCount, Rummy.TOTAL_CARDS, "comparisonCount");
 		assertTrue(equalityCount < comparisonCount);
+		assertEquals(pile1, pile2);
 	}
 }
