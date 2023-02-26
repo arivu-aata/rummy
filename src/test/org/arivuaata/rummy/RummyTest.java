@@ -2,11 +2,13 @@ package org.arivuaata.rummy;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
 
 import org.arivuaata.rummy.Card.Rank;
 import org.arivuaata.rummy.Card.Suit;
@@ -159,19 +161,26 @@ class RummyTest {
 		Card gameJoker = arrangement.getGameJoker();
 		assertTrue(gameJoker instanceof Card);
 		
+		Stack<Card> openPile = arrangement.getOpenPile();
+		assertEquals(1, openPile.size());
+		
 		Set<Card> drawingPile = arrangement.getDrawingPile();
 		
-		assertDisjointness(gameJoker, drawingPile);
-		assertTotality(gameJoker, drawingPile);
+		assertDisjointness(gameJoker, openPile, drawingPile);
+		assertTotality(gameJoker, openPile, drawingPile);
 	}
 
-	private void assertTotality(Card gameJoker, Set<Card> drawingPile) {
+	private void assertTotality(Card gameJoker, Stack<Card> openPile, Set<Card> drawingPile) {
 		Set<Card> allCards = new HashSet<>(drawingPile);
 		allCards.add(gameJoker);
+		allCards.addAll(openPile);
 		assertEquals(allCards, Rummy.drawingPileOnGameStart());
 	}
 
-	private void assertDisjointness(Card gameJoker, Set<Card> drawingPile) {
+	private void assertDisjointness(Card gameJoker, Stack<Card> openPile, Set<Card> drawingPile) {
+		assertFalse(openPile.contains(gameJoker));
 		assertFalse(drawingPile.contains(gameJoker));
+		
+		assertTrue(Collections.disjoint(openPile, drawingPile));
 	}
 }

@@ -8,6 +8,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.Stack;
 
 public class Rummy {
 
@@ -52,10 +53,13 @@ public class Rummy {
 	}
 
 	public static CardsArrangementAfterDealing dealOnGameStart() {
-		Set<Card> allCards = drawingPileOnGameStart();
-		Iterator<Card> iterator = allCards.iterator();
+		Iterator<Card> iterator = drawingPileOnGameStart().iterator();
 		
 		Card gameJoker = iterator.next();
+		iterator.remove();
+		
+		Stack<Card> openPile = new Stack<>();
+		openPile.push(iterator.next());
 		iterator.remove();
 		
 		Set<Card> drawingPile = new LinkedHashSet<>();
@@ -63,9 +67,8 @@ public class Rummy {
 			Card card = iterator.next();
 			drawingPile.add(card);
 		}
-		CardsArrangementAfterDealing arrangement = new CardsArrangementAfterDealing(gameJoker, drawingPile);
-		// TODO Auto-generated method stub
-		return arrangement;
+		
+		return new CardsArrangementAfterDealing(gameJoker, drawingPile, openPile);
 	}
 
 }
