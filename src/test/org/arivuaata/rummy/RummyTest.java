@@ -3,6 +3,7 @@ package org.arivuaata.rummy;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -149,5 +150,20 @@ class RummyTest {
 		assertEquals(pile1, pile2);
 		assertEquals(comparisonCount, Rummy.TOTAL_CARDS, "comparisonCount");
 		assertTrue(equalityCount < comparisonCount);
+	}
+	
+	@Test
+	void dealOnGameStart() throws Exception {
+		CardsArrangementAfterDealing arrangement = Rummy.dealOnGameStart();
+		
+		Card gameJoker = arrangement.getGameJoker();
+		assertTrue(gameJoker instanceof Card);
+		
+		Set<Card> drawingPile = arrangement.getDrawingPile();
+		assertFalse(drawingPile.contains(gameJoker));
+		
+		Set<Card> allCards = new HashSet<>(drawingPile);
+		allCards.add(gameJoker);
+		assertEquals(allCards, Rummy.drawingPileOnGameStart());
 	}
 }

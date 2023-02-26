@@ -3,6 +3,7 @@ package org.arivuaata.rummy;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Random;
@@ -48,6 +49,23 @@ public class Rummy {
 		}
 
 		return randomizedCards;
+	}
+
+	public static CardsArrangementAfterDealing dealOnGameStart() {
+		Set<Card> allCards = drawingPileOnGameStart();
+		Iterator<Card> iterator = allCards.iterator();
+		
+		Card gameJoker = iterator.next();
+		iterator.remove();
+		
+		Set<Card> drawingPile = new LinkedHashSet<>();
+		while (iterator.hasNext()) {
+			Card card = iterator.next();
+			drawingPile.add(card);
+		}
+		CardsArrangementAfterDealing arrangement = new CardsArrangementAfterDealing(gameJoker, drawingPile);
+		// TODO Auto-generated method stub
+		return arrangement;
 	}
 
 }
