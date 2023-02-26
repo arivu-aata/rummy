@@ -160,8 +160,8 @@ class RummyTest {
 		assertTrue(gameJoker instanceof Card);
 		
 		Set<Card> drawingPile = arrangement.getDrawingPile();
-		assertDisjointness(gameJoker, drawingPile);
 		
+		assertDisjointness(gameJoker, drawingPile);
 		assertTotality(gameJoker, drawingPile);
 	}
 
