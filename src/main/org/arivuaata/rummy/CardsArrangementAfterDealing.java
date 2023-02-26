@@ -1,19 +1,22 @@
 package org.arivuaata.rummy;
 
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
 class CardsArrangementAfterDealing {
 
 	private final Card gameJoker;
-	private final Set<Card> drawingPile;
 	private final Stack<Card> openPile;
+	private final List<Set<Card>> playersCards;
+	private final Set<Card> drawingPile;
 
-	public CardsArrangementAfterDealing(Card gameJoker, Set<Card> drawingPile, Stack<Card> openPile) {
-		// TODO Auto-generated constructor stub
+	public CardsArrangementAfterDealing(Card gameJoker, Stack<Card> openPile,
+			List<Set<Card>> playersCards, Set<Card> drawingPile) {
 		this.gameJoker = gameJoker;
-		this.drawingPile = drawingPile;
 		this.openPile = openPile;
+		this.playersCards = playersCards;
+		this.drawingPile = drawingPile;
 	}
 
 	public Card getGameJoker() {
@@ -26,6 +29,10 @@ class CardsArrangementAfterDealing {
 
 	public Stack<Card> getOpenPile() {
 		return openPile;
+	}
+
+	public List<Set<Card>> getPlayersCards() {
+		return playersCards;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -164,23 +165,51 @@ class RummyTest {
 		Stack<Card> openPile = arrangement.getOpenPile();
 		assertEquals(1, openPile.size());
 		
+		List<Set<Card>> playersCards = arrangement.getPlayersCards();
+		assertEquals(2, playersCards.size());
+		
+		for (Set<Card> playerCards : playersCards) {
+			assertEquals(13, playerCards.size());
+		}
+		
 		Set<Card> drawingPile = arrangement.getDrawingPile();
 		
-		assertDisjointness(gameJoker, openPile, drawingPile);
-		assertTotality(gameJoker, openPile, drawingPile);
+		assertDisjointness(gameJoker, openPile, playersCards, drawingPile);
+		assertTotality(gameJoker, openPile, playersCards, drawingPile);
 	}
 
-	private void assertTotality(Card gameJoker, Stack<Card> openPile, Set<Card> drawingPile) {
+	private void assertTotality(Card gameJoker, Stack<Card> openPile,
+			List<Set<Card>> playersCards, Set<Card> drawingPile) {
 		Set<Card> allCards = new HashSet<>(drawingPile);
 		allCards.add(gameJoker);
 		allCards.addAll(openPile);
+		
+		for (Set<Card> playerCards : playersCards) {
+			allCards.addAll(playerCards);
+		}
+		
 		assertEquals(allCards, Rummy.drawingPileOnGameStart());
 	}
 
-	private void assertDisjointness(Card gameJoker, Stack<Card> openPile, Set<Card> drawingPile) {
+	private void assertDisjointness(Card gameJoker, Stack<Card> openPile,
+			List<Set<Card>> playersCards, Set<Card> drawingPile) {
 		assertFalse(openPile.contains(gameJoker));
 		assertFalse(drawingPile.contains(gameJoker));
 		
 		assertTrue(Collections.disjoint(openPile, drawingPile));
+		
+		for (int i = 0; i < playersCards.size() - 1; i++) {
+			Set<Card> playerCards = playersCards.get(i);
+			for (int j = i + 1; j < playersCards.size(); j++) {
+				Set<Card> nextPlayerCards = playersCards.get(j);
+				assertTrue(Collections.disjoint(playerCards, nextPlayerCards));
+			}
+		}
+		
+		for (Set<Card> playerCards : playersCards) {
+			assertFalse(playerCards.contains(gameJoker));
+			assertTrue(Collections.disjoint(playerCards, openPile));
+			assertTrue(Collections.disjoint(playerCards, drawingPile));
+		}
 	}
 }

@@ -1,10 +1,12 @@
 package org.arivuaata.rummy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -62,13 +64,25 @@ public class Rummy {
 		openPile.push(iterator.next());
 		iterator.remove();
 		
+		int totalPlayers = 2;
+		List<Set<Card>> playersCards = new ArrayList<>(totalPlayers);
+		for (int i = 0; i < totalPlayers; i++) {
+			Set<Card> playerCards = new HashSet<>();
+			for (int j = 0; j < 13; j++) {
+				Card card = iterator.next();
+				playerCards.add(card);
+				iterator.remove();
+			}
+			playersCards.add(playerCards);
+		}
+		
 		Set<Card> drawingPile = new LinkedHashSet<>();
 		while (iterator.hasNext()) {
 			Card card = iterator.next();
 			drawingPile.add(card);
 		}
 		
-		return new CardsArrangementAfterDealing(gameJoker, drawingPile, openPile);
+		return new CardsArrangementAfterDealing(gameJoker, openPile, playersCards, drawingPile);
 	}
 
 }
