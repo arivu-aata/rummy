@@ -160,10 +160,18 @@ class RummyTest {
 		assertTrue(gameJoker instanceof Card);
 		
 		Set<Card> drawingPile = arrangement.getDrawingPile();
-		assertFalse(drawingPile.contains(gameJoker));
+		assertDisjointness(gameJoker, drawingPile);
 		
+		assertTotality(gameJoker, drawingPile);
+	}
+
+	private void assertTotality(Card gameJoker, Set<Card> drawingPile) {
 		Set<Card> allCards = new HashSet<>(drawingPile);
 		allCards.add(gameJoker);
 		assertEquals(allCards, Rummy.drawingPileOnGameStart());
+	}
+
+	private void assertDisjointness(Card gameJoker, Set<Card> drawingPile) {
+		assertFalse(drawingPile.contains(gameJoker));
 	}
 }
