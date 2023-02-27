@@ -173,6 +173,7 @@ class RummyTest {
 		}
 		
 		Set<Card> drawingPile = arrangement.getDrawingPile();
+		assertEquals(Rummy.TOTAL_CARDS - (1 + 1 + 2*13), drawingPile.size());
 		
 		assertDisjointness(gameJoker, openPile, playersCards, drawingPile);
 		assertTotality(gameJoker, openPile, playersCards, drawingPile);
