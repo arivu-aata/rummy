@@ -155,9 +155,22 @@ class RummyTest {
 		assertTrue(equalityCount < comparisonCount);
 	}
 	
-	@Test
-	void dealOnGameStart() throws Exception {
-		CardsArrangementAfterDealing arrangement = Rummy.dealOnGameStart();
+	@ParameterizedTest
+	@CsvSource({
+		"2, 2",
+		"1, 2",
+		"0, 2",
+		"-5, 2",
+		"3, 3",
+		"4, 4",
+		"5, 5",
+		"6, 6",
+		"7, 6",
+		"10, 6",
+		"20, 6"
+	})
+	void dealOnGameStart(int requestedTotalPlayers, int actualTotalPlayers) throws Exception {
+		CardsArrangementAfterDealing arrangement = Rummy.dealOnGameStart(requestedTotalPlayers);
 		
 		Card gameJoker = arrangement.getGameJoker();
 		assertTrue(gameJoker instanceof Card);
@@ -166,14 +179,14 @@ class RummyTest {
 		assertEquals(1, openPile.size());
 		
 		List<Set<Card>> playersCards = arrangement.getPlayersCards();
-		assertEquals(2, playersCards.size());
+		assertEquals(actualTotalPlayers, playersCards.size());
 		
 		for (Set<Card> playerCards : playersCards) {
 			assertEquals(13, playerCards.size());
 		}
 		
 		Set<Card> drawingPile = arrangement.getDrawingPile();
-		assertEquals(Rummy.TOTAL_CARDS - (1 + 1 + 2*13), drawingPile.size());
+		assertEquals(Rummy.TOTAL_CARDS - (1 + 1 + actualTotalPlayers*13), drawingPile.size());
 		
 		assertDisjointness(gameJoker, openPile, playersCards, drawingPile);
 		assertTotality(gameJoker, openPile, playersCards, drawingPile);

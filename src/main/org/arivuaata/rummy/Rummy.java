@@ -54,7 +54,7 @@ public class Rummy {
 		return randomizedCards;
 	}
 
-	public static CardsArrangementAfterDealing dealOnGameStart() {
+	static CardsArrangementAfterDealing dealOnGameStart(int totalPlayers) {
 		Iterator<Card> iterator = drawingPileOnGameStart().iterator();
 		
 		Card gameJoker = iterator.next();
@@ -64,9 +64,9 @@ public class Rummy {
 		openPile.push(iterator.next());
 		iterator.remove();
 		
-		int totalPlayers = 2;
-		List<Set<Card>> playersCards = new ArrayList<>(totalPlayers);
-		for (int i = 0; i < totalPlayers; i++) {
+		int actualTotalPlayers = fixTotalPlayers(totalPlayers);
+		List<Set<Card>> playersCards = new ArrayList<>(actualTotalPlayers);
+		for (int i = 0; i < actualTotalPlayers; i++) {
 			Set<Card> playerCards = new HashSet<>();
 			for (int j = 0; j < 13; j++) {
 				Card card = iterator.next();
@@ -83,6 +83,10 @@ public class Rummy {
 		}
 		
 		return new CardsArrangementAfterDealing(gameJoker, openPile, playersCards, drawingPile);
+	}
+
+	private static int fixTotalPlayers(int totalPlayers) {
+		return totalPlayers < 2 ? 2 : totalPlayers > 6 ? 6 : totalPlayers;
 	}
 
 }
