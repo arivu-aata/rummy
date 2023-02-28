@@ -16,6 +16,12 @@ public class Rummy {
 
 	public static final int TOTAL_CARDS = 3 * 53;
 
+	public static void main(String[] args) {
+		int totalPlayers = 2;
+		
+		System.out.println(String.format("Starting a %d-player Rummy game...", totalPlayers));
+	}
+	
 	private static Set<Card> setOf3x53CardsOfAllRanksAndSuits() {
 		Set<Card> setOf3x53CardsOfAllRanksAndSuits = new HashSet<>(TOTAL_CARDS);
 		
