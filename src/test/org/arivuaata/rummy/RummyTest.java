@@ -169,7 +169,7 @@ class RummyTest {
 		"10, 6",
 		"20, 6"
 	})
-	void dealOnGameStart(int requestedTotalPlayers, int actualTotalPlayers) throws Exception {
+	void deal(int requestedTotalPlayers, int actualTotalPlayers) throws Exception {
 		CardsArrangementAfterDealing arrangement = Rummy.deal(requestedTotalPlayers);
 		
 		Card gameJoker = arrangement.getGameJoker();
