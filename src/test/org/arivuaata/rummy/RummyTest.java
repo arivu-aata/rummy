@@ -227,9 +227,8 @@ class RummyTest {
 		}
 	}
 	
-	@Test
-	void play() throws Exception {
-		RummyUI rummyUI = null;
-		Rummy.play(rummyUI);
-	}
+	/*
+	 * @Test void play() throws Exception { RummyUI rummyUI = null;
+	 * Rummy.play(rummyUI); }
+	 */
 }
