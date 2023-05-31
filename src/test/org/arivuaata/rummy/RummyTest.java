@@ -170,7 +170,7 @@ class RummyTest {
 		"20, 6"
 	})
 	void dealOnGameStart(int requestedTotalPlayers, int actualTotalPlayers) throws Exception {
-		CardsArrangementAfterDealing arrangement = Rummy.dealOnGameStart(requestedTotalPlayers);
+		CardsArrangementAfterDealing arrangement = Rummy.deal(requestedTotalPlayers);
 		
 		Card gameJoker = arrangement.getGameJoker();
 		assertTrue(gameJoker instanceof Card);
@@ -225,5 +225,11 @@ class RummyTest {
 			assertTrue(Collections.disjoint(playerCards, openPile));
 			assertTrue(Collections.disjoint(playerCards, drawingPile));
 		}
+	}
+	
+	@Test
+	void play() throws Exception {
+		RummyUI rummyUI = null;
+		Rummy.play(rummyUI);
 	}
 }
