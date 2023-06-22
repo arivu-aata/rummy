@@ -226,9 +226,4 @@ class RummyTest {
 			assertTrue(Collections.disjoint(playerCards, drawingPile));
 		}
 	}
-	
-	/*
-	 * @Test void play() throws Exception { RummyUI rummyUI = null;
-	 * Rummy.play(rummyUI); }
-	 */
 }

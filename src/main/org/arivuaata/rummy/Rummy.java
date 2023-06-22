@@ -93,11 +93,5 @@ public class Rummy {
 
 	private static int fixTotalPlayers(int totalPlayers) {
 		return totalPlayers < 2 ? 2 : totalPlayers > 6 ? 6 : totalPlayers;
-	}
-
-	/*
-	 * public static void play(RummyUI rummyUI) { // TODO Auto-generated method stub
-	 * 
-	 * }
-	 */
+	} 
 }
