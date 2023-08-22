@@ -12,7 +12,6 @@ import org.arivuaata.rummy.TurnPlayResult;
 public class ConsolePlay {
 
 	public static PlayADealResult playADeal(DealSettings dealSettings, List<ConsolePlayer> players) {
-		// TODO Auto-generated method stub
 		int dealerIndex = players.indexOf(dealSettings.getDealer());
 		ConsolePlayer dealer = players.get(dealerIndex);
 		
@@ -23,6 +22,10 @@ public class ConsolePlay {
 		
 		List<ConsolePlayer> orderedPlayers = orderPlayers(players, playOrder);
 
+		return doTurnPlay(orderedPlayers);
+	}
+
+	private static PlayADealResult doTurnPlay(List<ConsolePlayer> orderedPlayers) {
 		boolean turnPlayIsToBeDone = true;
 		while (turnPlayIsToBeDone) {
 			for (Iterator<ConsolePlayer> iterator = orderedPlayers.iterator(); iterator.hasNext();) {
