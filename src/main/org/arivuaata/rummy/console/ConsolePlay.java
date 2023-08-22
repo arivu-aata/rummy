@@ -23,19 +23,22 @@ public class ConsolePlay {
 		
 		List<ConsolePlayer> orderedPlayers = orderPlayers(players, playOrder);
 
-		for (Iterator<ConsolePlayer> iterator = orderedPlayers.iterator(); iterator.hasNext();) {
-			if (orderedPlayers.size() == 1) {
-				break;
-			}
-			
-			ConsolePlayer playingPlayer = iterator.next();
-			TurnPlayResult tpResult = playingPlayer.turnPlay();
-			
-			if (tpResult.getMove() == Move.DROP) {
-				iterator.remove();
-			}
+		boolean turnPlayIsToBeDone = true;
+		while (turnPlayIsToBeDone) {
+			for (Iterator<ConsolePlayer> iterator = orderedPlayers.iterator(); iterator.hasNext();) {
+				if (orderedPlayers.size() == 1) {
+					turnPlayIsToBeDone = false;
+					break;
+				}
+
+				ConsolePlayer playingPlayer = iterator.next();
+				TurnPlayResult tpResult = playingPlayer.turnPlay();
+
+				if (tpResult.getMove() == Move.DROP) {
+					iterator.remove();
+				}
+			} 
 		}
-		
 		if (orderedPlayers.size() == 1) {
 			PlayADealResult result = new PlayADealResult(orderedPlayers.get(0));
 			return result;

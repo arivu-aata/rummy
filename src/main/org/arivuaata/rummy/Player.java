@@ -5,7 +5,7 @@ import java.util.List;
 public class Player {
 
 	public enum Move {
-		DROP
+		DROP, PDP
 		
 	}
 	

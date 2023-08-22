@@ -1,6 +1,6 @@
 package org.arivuaata.rummy.console;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 class ConsolePlayTest {
 
 	@Test
-	void playADeal() {
+	void playADeal_playerDropsOn1stTurn() {
 		ConsolePlayer player1 = mock(ConsolePlayer.class);
 		ConsolePlayer player2 = mock(ConsolePlayer.class);
 		
@@ -46,6 +46,37 @@ class ConsolePlayTest {
 		
 		verify(player1, times(0)).turnPlay();
 		
+		assertEquals(player1, result.winner());
+	}
+	
+	@Test
+	void playADeal_playerDropsOn2ndTurn() throws Exception {
+		ConsolePlayer player1 = mock(ConsolePlayer.class);
+		ConsolePlayer player2 = mock(ConsolePlayer.class);
+		
+		DealSettings dealSettings = mock(DealSettings.class);
+		when(dealSettings.getDealer()).thenReturn(player1);
+		
+		List<ConsolePlayer> players = new ArrayList<>(2);
+		players.add(player1);
+		players.add(player2);
+		
+		NonPlayerCards nonPlayerCards = mock(NonPlayerCards.class);
+		when(player1.deal(players)).thenReturn(nonPlayerCards);
+		
+		TurnPlayResult turnPlayResult1 = mock(TurnPlayResult.class), turnPlayResult2 = mock(TurnPlayResult.class);
+		when(turnPlayResult1.getMove()).thenReturn(Player.Move.PDP);
+		when(turnPlayResult2.getMove()).thenReturn(Player.Move.DROP);
+		
+		when(player2.turnPlay()).thenReturn(turnPlayResult1, turnPlayResult2);
+
+		TurnPlayResult turnPlayResult3 = mock(TurnPlayResult.class);
+		when(turnPlayResult3.getMove()).thenReturn(Player.Move.PDP);
+
+		when(player1.turnPlay()).thenReturn(turnPlayResult3);
+		
+		PlayADealResult result = ConsolePlay.playADeal(dealSettings, players);
+
 		assertEquals(player1, result.winner());
 	}
 
