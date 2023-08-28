@@ -10,4 +10,9 @@ public class ConsolePlayer extends Player {
 		return null;
 	}
 
+	public boolean hasMadeValidDeclaration() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -25,7 +25,7 @@ public class ConsolePlay {
 		return doTurnPlay(orderedPlayers);
 	}
 
-	private static PlayADealResult doTurnPlay(List<ConsolePlayer> orderedPlayers) {
+	static PlayADealResult doTurnPlay(List<ConsolePlayer> orderedPlayers) {
 		boolean turnPlayIsToBeDone = true;
 		while (turnPlayIsToBeDone) {
 			for (Iterator<ConsolePlayer> iterator = orderedPlayers.iterator(); iterator.hasNext();) {
@@ -39,6 +39,12 @@ public class ConsolePlay {
 
 				if (tpResult.getMove() == Move.DROP) {
 					iterator.remove();
+				}
+				
+				if (tpResult.getMove() == Move.FINISH) {
+					if (playingPlayer.hasMadeValidDeclaration()) {
+						return new PlayADealResult(playingPlayer);
+					}
 				}
 			} 
 		}

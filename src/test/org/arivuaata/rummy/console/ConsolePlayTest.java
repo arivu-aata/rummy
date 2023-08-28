@@ -1,6 +1,6 @@
 package org.arivuaata.rummy.console;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -14,6 +14,7 @@ import org.arivuaata.rummy.DealSettings;
 import org.arivuaata.rummy.NonPlayerCards;
 import org.arivuaata.rummy.PlayADealResult;
 import org.arivuaata.rummy.Player;
+import org.arivuaata.rummy.Player.Move;
 import org.arivuaata.rummy.TurnPlayResult;
 import org.junit.jupiter.api.Test;
 
@@ -80,4 +81,30 @@ class ConsolePlayTest {
 		assertEquals(player1, result.winner());
 	}
 
+	
+	@Test
+	void doTurnPlay_playerFinishesAndDeclaresValidlyInFirstTurnPlay() throws Exception {
+		List<ConsolePlayer> players = new ArrayList<>();
+		ConsolePlayer player1 = mock(ConsolePlayer.class);
+		ConsolePlayer player2 = mock(ConsolePlayer.class);
+		ConsolePlayer player3 = mock(ConsolePlayer.class);
+		ConsolePlayer player4 = mock(ConsolePlayer.class);
+		
+		players.add(player1); players.add(player2); players.add(player3); players.add(player4);
+		
+		when(player1.turnPlay()).thenReturn(mock(TurnPlayResult.class));
+		when(player2.turnPlay()).thenReturn(mock(TurnPlayResult.class));
+		
+		TurnPlayResult player3TPResult = mock(TurnPlayResult.class);
+		when(player3TPResult.getMove()).thenReturn(Move.FINISH);
+		when(player3.turnPlay()).thenReturn(player3TPResult);
+		
+		when(player3.hasMadeValidDeclaration()).thenReturn(true);
+		
+		PlayADealResult result = ConsolePlay.doTurnPlay(players);
+		
+		assertEquals(player3, result.winner());
+		
+		verifyNoInteractions(player4);
+	}
 }
