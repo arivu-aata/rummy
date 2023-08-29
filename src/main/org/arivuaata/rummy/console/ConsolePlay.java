@@ -42,9 +42,10 @@ public class ConsolePlay {
 				}
 				
 				if (tpResult.getMove() == Move.FINISH) {
-					if (playingPlayer.hasMadeValidDeclaration()) {
+					if (playingPlayer.hasMadeValidDeclaration())
 						return new PlayADealResult(playingPlayer);
-					}
+					else
+						return new PlayADealResult(null);
 				}
 			} 
 		}

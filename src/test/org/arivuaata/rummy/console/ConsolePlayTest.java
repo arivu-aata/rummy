@@ -80,7 +80,6 @@ class ConsolePlayTest {
 
 		assertEquals(player1, result.winner());
 	}
-
 	
 	@Test
 	void doTurnPlay_playerFinishesAndDeclaresValidlyInFirstTurnPlay() throws Exception {
@@ -104,6 +103,32 @@ class ConsolePlayTest {
 		PlayADealResult result = ConsolePlay.doTurnPlay(players);
 		
 		assertEquals(player3, result.winner());
+		
+		verifyNoInteractions(player4);
+	}
+	
+	@Test
+	void doTurnPlay_playerFinishesAndDeclaresInvalidlyInFirstTurnPlay() throws Exception {
+		List<ConsolePlayer> players = new ArrayList<>();
+		ConsolePlayer player1 = mock(ConsolePlayer.class);
+		ConsolePlayer player2 = mock(ConsolePlayer.class);
+		ConsolePlayer player3 = mock(ConsolePlayer.class);
+		ConsolePlayer player4 = mock(ConsolePlayer.class);
+		
+		players.add(player1); players.add(player2); players.add(player3); players.add(player4);
+		
+		when(player1.turnPlay()).thenReturn(mock(TurnPlayResult.class));
+		when(player2.turnPlay()).thenReturn(mock(TurnPlayResult.class));
+		
+		TurnPlayResult player3TPResult = mock(TurnPlayResult.class);
+		when(player3TPResult.getMove()).thenReturn(Move.FINISH);
+		when(player3.turnPlay()).thenReturn(player3TPResult);
+		
+		when(player3.hasMadeValidDeclaration()).thenReturn(false);
+		
+		PlayADealResult result = ConsolePlay.doTurnPlay(players);
+		
+		assertEquals(null, result.winner());
 		
 		verifyNoInteractions(player4);
 	}
